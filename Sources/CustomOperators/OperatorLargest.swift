@@ -11,21 +11,44 @@ import Foundation
 
 infix operator ?>: ComparisonPrecedence
 infix operator ??>: ComparisonPrecedence
-// Returns the largest of two objects
+/// Returns the largest of two objects
+///
+///     return (lhs > rhs) ? lhs : rhs
+///
+/// - Parameters:
+///   - lhs: First comparable object
+///   - rhs: Second comparable object
+/// - Returns: Returns the greater of the two objects
 public func ?><Object>(lhs: @autoclosure () -> Object,
                        rhs: @autoclosure () -> Object) -> Object where Object: Comparable {
     let l = lhs()
     let r = rhs()
     return (l > r) ? l : r
 }
-// Returns the largest of two objects
+/// Returns the largest of two objects
+///
+///     guard lhs != nil else { return rhs }
+///     return (lhs > rhs) ? lhs : rhs
+///
+/// - Parameters:
+///   - lhs: First comparable object or nil
+///   - rhs: Second comparable object
+/// - Returns: Returns the greater of the two objects
 public func ??><Object>(lhs: @autoclosure () -> Object?,
                         rhs: @autoclosure () -> Object) -> Object where Object: Comparable {
     let r = rhs()
     guard let l = lhs() else { return r }
     return (l > r) ? l : r
 }
-// Returns the largest of two objects
+/// Returns the largest of two objects
+///
+///     guard rhs != nil else { return lhs }
+///     return (lhs > rhs) ? lhs : rhs
+///
+/// - Parameters:
+///   - lhs: First comparable object
+///   - rhs: Second comparable object or nil
+/// - Returns: Returns the greater of the two objects
 public func ??><Object>(lhs: @autoclosure () -> Object,
                         rhs: @autoclosure () -> Object?) -> Object where Object: Comparable {
     let l = lhs()
@@ -35,12 +58,24 @@ public func ??><Object>(lhs: @autoclosure () -> Object,
 
 infix operator ?>=: AssignmentPrecedence
 infix operator ??>=: AssignmentPrecedence
-// Assigns lhs to the largest of the two objects
+/// Assigns lhs to the greater of the two objects
+///
+///     lhs = (lhs ?> rhs)
+///
+/// - Parameters:
+///   - lhs: First comparable object
+///   - rhs: Second comparable object
 public func ?>=<Object>(lhs: inout Object,
                         rhs: @autoclosure () -> Object) where Object: Comparable {
     lhs = (lhs ?> rhs)
 }
-// Assigns lhs to the largest of the two objects
+/// Assigns lhs to the greater of the two objects
+///
+///     lhs = (lhs ??> rhs)
+///
+/// - Parameters:
+///   - lhs: First comparable object
+///   - rhs: Second comparable object or nil
 public func ??>=<Object>(lhs: inout Object,
                          rhs: @autoclosure () -> Object?) where Object: Comparable {
     guard let r = rhs() else { return }
