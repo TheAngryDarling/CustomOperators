@@ -22,6 +22,7 @@ let c: Int? = nil
 (b ?< a) // ====> a(1)
 (a ??< c) // ====> a(1)
 (c ??< a) // ====> a(1)
+(c ??< c) // ====> c(nil)
 
 // Largest operators
 let a: Int = 1
@@ -32,6 +33,7 @@ let c: Int? = nil
 (b ?> a) // ====> b(2)
 (a ??> c) // ====> a(1)
 (c ??> a) // ====> a(1)
+(c ??> c) // ====> c(nil)
 ```
 ## Author
 
