@@ -58,6 +58,24 @@ public func ??<<Object>(lhs: @autoclosure () -> Object,
     return (l < r) ? l : r
 }
 
+/// Returns the smallest of two objects or nil if found
+///
+///     guard rhs != nil else { return lhs }
+///     return (lhs < rhs) ? lhs : rhs
+///
+/// - Parameters:
+///   - lhs: First comparable object or nil
+///   - rhs: Second comparable object or nil
+/// - Returns: Returns the smaller of the two objects or nil if found
+public func ??<<T>(lh: @autoclosure () -> T?,
+                   rh: @autoclosure () -> T?) -> T? where T: Comparable {
+    guard let lhs = lh() else { return nil }
+    guard let rhs = rh() else { return nil }
+    if lhs < rhs { return lhs }
+    else { return rhs }
+    
+}
+
 
 
 infix operator ?<=: AssignmentPrecedence
@@ -84,4 +102,15 @@ public func ??<=<Object>(lhs: inout Object,
                          rhs: @autoclosure () -> Object?) where Object: Comparable {
     guard let r = rhs() else { return }
     lhs = (lhs ?< r)
+}
+/// Assigns lhs to the smaller of the two objects or nil if either are nil
+///
+///     lhs = (lhs ??< rhs)
+///
+/// - Parameters:
+///   - lhs: First comparable object, will store the results from the operation
+///   - rhs: Second comparable object or nil
+public func ??<=<Object>(lhs: inout Object?,
+                         rhs: @autoclosure () -> Object?) where Object: Comparable {
+    lhs = (lhs ??> rhs())
 }
