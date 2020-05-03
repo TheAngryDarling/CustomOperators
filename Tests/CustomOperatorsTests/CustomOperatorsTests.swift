@@ -19,6 +19,7 @@ final class CustomOperatorsTests: XCTestCase {
         XCTAssert((b ?< a) == a, "Expected \(b) ?< \(a) == \(a) but returned \((b ?< a))")
         XCTAssert((a ??< c) == a, "Expected \(a) ??< \(c as Any) == \(a) but returned \((a ??< c))")
         XCTAssert((c ??< a) == a, "Expected \(c as Any) ??< \(a) == \(a) but returned \((c ??< a))")
+        XCTAssert((c ??< c) == c, "Expected \(c as Any) ??< \(c as Any) == \(c as Any) but returned \((c ??< c) as Any)")
     }
     
     func testLargestOperator() {
@@ -29,10 +30,12 @@ final class CustomOperatorsTests: XCTestCase {
         XCTAssert((b ?> a) == b, "Expected \(b) ?> \(a) == \(b) but returned \((b ?> a))")
         XCTAssert((a ??> c) == a, "Expected \(a) ??> \(c as Any) == \(a) but returned \((a ??> c))")
         XCTAssert((c ??> a) == a, "Expected \(c as Any) ??> \(a) == \(a) but returned \((c ??> a))")
+        XCTAssert((c ??> c) == c, "Expected \(c as Any) ??> \(c as Any) == \(c as Any) but returned \((c ??> c) as Any)")
     }
     
     static var allTests = [
         ("testXOR", testXOR),
-        ("testSmallestOperator", testSmallestOperator)
+        ("testSmallestOperator", testSmallestOperator),
+        ("testLargestOperator", testLargestOperator)
     ]
 }
