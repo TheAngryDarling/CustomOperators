@@ -107,5 +107,28 @@ public func ??>=<Object>(lhs: inout Object,
 ///   - rhs: Second comparable object or nil
 public func ??>=<Object>(lhs: inout Object?,
                          rhs: @autoclosure () -> Object) where Object: Comparable {
-    lhs = (lhs ??> rhs)
+    guard let l = lhs else {
+        lhs = rhs()
+        return
+    }
+    let r = rhs()
+    
+    lhs = (l ?> r)
+}
+/// Assigns lhs to the greater of the two objects or nil if both are nil
+///
+///     lhs = (lhs ??> rhs)
+///
+/// - Parameters:
+///   - lhs: First comparable object or nil
+///   - rhs: Second comparable object or nil
+public func ??>=<Object>(lhs: inout Object?,
+                         rhs: @autoclosure () -> Object?) where Object: Comparable {
+    guard let l = lhs else {
+        lhs = rhs()
+        return
+    }
+    guard let r = rhs() else { return }
+    
+    lhs = (l ?> r)
 }
